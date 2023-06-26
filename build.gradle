@@ -1,12 +1,30 @@
 plugins {
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id 'java'
+    id "org.springframework.boot" version "2.6.3" apply false
 }
 
-group = 'com.svshayt'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+    group = 'com.svshayt'
+    version = '0.0.1-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "maven-publish"
+
+    version = rootProject.version
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${spring_boot_version}"
+        }
+    }
 }
 
 dependencies {
